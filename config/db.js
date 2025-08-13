@@ -9,4 +9,6 @@ module.exports = (url) => {
     .catch((err) => {
       console.log(err);
     });
+
+  return mongoose;
 };
