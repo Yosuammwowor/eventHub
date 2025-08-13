@@ -2,15 +2,30 @@ require("dotenv").config();
 
 const express = require("express");
 const app = express();
-
+const path = require("path");
 const PORT = process.env.PORT || 3000;
-const MONGO_URI = process.env.MONGO_URI;
-// const mongoose = require("./config/db");
 
-require("./config/db")(MONGO_URI);
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!!!");
+app.get("/", async (req, res) => {
+  const Event = require("./models/Event");
+
+  const events = await Event.find();
+
+  res.render("home", { events });
+});
+
+app.get("/events/:id", async (req, res) => {
+  const Event = require("./models/Event");
+  require("./models/User");
+
+  const events = await Event.findById(req.params.id).populate([
+    "createdBy",
+    "participants",
+  ]);
+
+  res.render("eventDetails", { events });
 });
 
 app.listen(PORT, () => {

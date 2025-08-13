@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Hub</title>
+  </head>
+  <body>
+    <h1>Event information:</h1>
+    <ul>
+      <li>Event: <%= events.title %></li>
+      <li>Deskripsi: <%= events.description %></li>
+      <li>Lokasi: <%= events.location %></li>
+      <li>Tanggal: <%= events.date.toDateString() %></li>
+      <li>Penyelenggara: <%= events.createdBy.username %></li>
+      <% if (events.participants.length !== 0) { %>
+      <li>
+        Partisipan: <br />
+        <ul>
+          <% for (let participant of events.participants) { %>
+          <li><%= participant.email %></li>
+          <% } %>
+        </ul>
+      </li>
+      <% } else { %>
+      <li>Partisipan: Belum Ada🤔</li>
+      <% } %>
+    </ul>
+  </body>
+</html>

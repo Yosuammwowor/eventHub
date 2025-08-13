@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Hub</title>
+  </head>
+  <body>
+    <h1>Hi👋, Welcome to Event Hub</h1>
+    <p>Here you can book or create event based on your preference's</p>
+
+    <h2>Available Events</h2>
+    <% if (events) { %>
+    <ul>
+      <% for (let event of events) { %>
+      <li>
+        <a href="/events/<%= event._id %>">
+          <%= event.title %> - <%= event.date.toLocaleDateString()%></li>
+        </a>
+      <% } %>
+    </ul>
+    <% } else { %>
+    <h3>No Events detected!</h3>
+    <% } %>
+  </body>
+</html>
