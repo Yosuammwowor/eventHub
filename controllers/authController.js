@@ -15,7 +15,9 @@ const authLogin = async (req, res, next) => {
     return console.log("Email Error!");
   }
 
-  if (password !== users.password) {
+  const statusPassword = await users.comparePassword(password);
+
+  if (!statusPassword) {
     return console.log("Password Error!");
   }
 
@@ -37,8 +39,11 @@ const authRegister = async (req, res, next) => {
     return console.log("Tipe Data Error!");
   }
 
-  // save in session
-  // sessionStorage.setItem("id", users._id);
+  const users = await User.insertOne({
+    username: username,
+    email: email,
+    password: password,
+  });
 
   setUserActive(true);
   res.redirect(`/dashboard/${users._id}`);

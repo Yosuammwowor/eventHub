@@ -7,9 +7,15 @@ const getDashboard = async (req, res) => {
 };
 
 const logOut = (req, res) => {
-  // console.log("user logout");
-  setUserActive(false);
-  res.redirect("/");
+  req.session.destroy((err) => {
+    if (err) {
+      console.log("Error destroying session: ", err);
+      return res.redirect("/");
+    }
+    res.clearCookie("connect.sid");
+    setUserActive(false);
+    res.redirect("/");
+  });
 };
 
 module.exports = { getDashboard, logOut };

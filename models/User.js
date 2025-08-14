@@ -2,6 +2,7 @@ require("dotenv").config();
 const URI = process.env.MONGO_URI;
 
 const mongoose = require("../config/db")(URI);
+const bcrypt = require("bcrypt");
 
 const userSchema = mongoose.Schema({
   username: {
@@ -23,6 +24,15 @@ const userSchema = mongoose.Schema({
   ],
 });
 
-// const User = mongoose.model("User", userSchema);
+userSchema.pre("save", async function () {
+  await bcrypt.hash(this.password, 12).then((hash) => {
+    this.password = hash;
+  });
+});
+
+userSchema.methods.comparePassword = async function (originalPass) {
+  const result = await bcrypt.compare(originalPass, this.password);
+  return result;
+};
 
 module.exports = mongoose.model("User", userSchema);
