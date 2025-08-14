@@ -1,13 +1,23 @@
 require("dotenv").config();
 
 const express = require("express");
+const session = require("express-session");
+
 const app = express();
 const path = require("path");
 const PORT = process.env.PORT || 3000;
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
+
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "yoursecret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // Auth Routes
 app.use(require("./routes/authRoutes"));
@@ -21,7 +31,12 @@ app.get("/", async (req, res) => {
 
   const { getUserStatus } = require("./middleware/authMiddleware");
 
-  res.render("home", { events, getUserStatus });
+  if (!getUserStatus()) {
+    res.render("home", { events, getUserStatus });
+  } else {
+    const userId = req.session.userId;
+    res.render("home", { events, getUserStatus, userId });
+  }
 });
 
 app.get("/events/:id", async (req, res) => {

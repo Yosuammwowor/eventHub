@@ -19,6 +19,9 @@ const authLogin = async (req, res, next) => {
     return console.log("Password Error!");
   }
 
+  // save in session
+  req.session.userId = users._id;
+
   setUserActive(true);
   res.redirect(`/dashboard/${users._id}`);
 };
@@ -33,6 +36,9 @@ const authRegister = async (req, res, next) => {
   ) {
     return console.log("Tipe Data Error!");
   }
+
+  // save in session
+  // sessionStorage.setItem("id", users._id);
 
   setUserActive(true);
   res.redirect(`/dashboard/${users._id}`);

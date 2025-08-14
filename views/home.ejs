@@ -26,6 +26,8 @@
     <% if (!getUserStatus()) { %>
     <a href="/login">Login</a>
     <a href="/register">Register</a>
+    <% } else { %>
+      <a href="/dashboard/<%= userId %>">Kembali</a>
     <% } %>
   </body>
 </html>
