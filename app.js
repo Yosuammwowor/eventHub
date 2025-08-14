@@ -11,13 +11,17 @@ app.use(express.urlencoded({ extended: true }));
 
 // Auth Routes
 app.use(require("./routes/authRoutes"));
+// User Routes
+app.use(require("./routes/userRoutes"));
 
 app.get("/", async (req, res) => {
   const Event = require("./models/Event");
 
   const events = await Event.find();
 
-  res.render("home", { events });
+  const { getUserStatus } = require("./middleware/authMiddleware");
+
+  res.render("home", { events, getUserStatus });
 });
 
 app.get("/events/:id", async (req, res) => {
@@ -29,7 +33,7 @@ app.get("/events/:id", async (req, res) => {
     "participants",
   ]);
 
-  res.render("eventDetails", { events });
+  res.render("events/eventDetails", { events });
 });
 
 app.listen(PORT, () => {

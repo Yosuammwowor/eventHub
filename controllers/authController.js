@@ -1,5 +1,7 @@
 const User = require("../models/User");
 
+const { setUserActive } = require("../middleware/authMiddleware");
+
 const authLogin = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -9,15 +11,31 @@ const authLogin = async (req, res, next) => {
 
   const users = await User.findOne({ email: email });
 
-  if (users.length === 0) {
-    return console.log("User Error!");
+  if (!users) {
+    return console.log("Email Error!");
   }
 
   if (password !== users.password) {
     return console.log("Password Error!");
   }
 
-  console.log("Semua aman!");
+  setUserActive(true);
+  res.redirect(`/dashboard/${users._id}`);
 };
 
-module.exports = { authLogin };
+const authRegister = async (req, res, next) => {
+  const { username, email, password } = req.body;
+
+  if (
+    typeof email !== "string" ||
+    typeof password !== "string" ||
+    typeof username !== "string"
+  ) {
+    return console.log("Tipe Data Error!");
+  }
+
+  setUserActive(true);
+  res.redirect(`/dashboard/${users._id}`);
+};
+
+module.exports = { authLogin, authRegister };

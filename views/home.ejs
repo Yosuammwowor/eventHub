@@ -23,7 +23,9 @@
     <h3>No Events detected!</h3>
     <% } %>
 
+    <% if (!getUserStatus()) { %>
     <a href="/login">Login</a>
     <a href="/register">Register</a>
+    <% } %>
   </body>
 </html>
