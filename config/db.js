@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 
-module.exports = (url) => {
+const connectDb = async () => {
+  const URI = process.env.MONGO_URI;
   mongoose
-    .connect(url)
+    .connect(URI)
     .then(() => {
       console.log("Connection to database success!!!");
     })
     .catch((err) => {
       console.log(err);
     });
-
-  return mongoose;
 };
+
+module.exports = connectDb;

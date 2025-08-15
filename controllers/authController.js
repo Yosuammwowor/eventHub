@@ -45,6 +45,9 @@ const authRegister = async (req, res, next) => {
     password: password,
   });
 
+  // save in session
+  req.session.userId = users._id;
+
   setUserActive(true);
   res.redirect(`/dashboard/${users._id}`);
 };

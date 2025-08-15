@@ -1,7 +1,4 @@
-require("dotenv").config();
-const URI = process.env.MONGO_URI;
-
-const mongoose = require("../config/db")(URI);
+const mongoose = require("mongoose");
 
 const eventSchema = mongoose.Schema({
   title: {

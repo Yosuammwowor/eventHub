@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const session = require("express-session");
+const connectDb = require("./config/db");
 
 const app = express();
 const path = require("path");
@@ -18,6 +19,9 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+// Database connection
+connectDb();
 
 // Auth Routes
 app.use(require("./routes/authRoutes"));
