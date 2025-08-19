@@ -27,6 +27,8 @@ connectDb();
 app.use(require("./routes/authRoutes"));
 // User Routes
 app.use(require("./routes/userRoutes"));
+// Event Routes
+app.use(require("./routes/eventRoutes"));
 
 app.get("/", async (req, res) => {
   const Event = require("./models/Event");
@@ -45,14 +47,19 @@ app.get("/", async (req, res) => {
 
 app.get("/events/:id", async (req, res) => {
   const Event = require("./models/Event");
-  require("./models/User");
 
   const events = await Event.findById(req.params.id).populate([
     "createdBy",
     "participants",
   ]);
 
-  res.render("events/eventDetails", { events });
+  const { getUserStatus } = require("./middleware/authMiddleware");
+
+  if (!getUserStatus) {
+    res.render("events/eventDetails", { events, getUserStatus });
+  } else {
+    res.render("events/eventDetails", { events, getUserStatus });
+  }
 });
 
 app.listen(PORT, () => {

@@ -8,6 +8,27 @@
   <body>
     <h1>Welcome back - <%= users.username %></h1>
     <a href="/">Kembali ke halaman utama</a>
+
+    <h1>Joined Events</h1>
+    <% if (users.joinedEvents.length != 0) { %>
+    <ul>
+      <% for (let event of users.joinedEvents) { %>
+      <li><%= event.title %> - <%= event.date.toLocaleDateString() %></li>
+      <% } %>
+    </ul>
+    <% } else { %>
+    <h2>Not yet joined any events!</h2>
+    <% } %>
+
+    <h1>Created Events</h1>
+    <% if (events) { %>
+    <ul>
+      <li><%= events.title %> - <%= events.description %></li>
+    </ul>
+    <% } else { %>
+    <h2>Not yet created any events!</h2>
+    <% } %>
+
     <form action="/dashboard" method="post">
       <button type="submit">Logout</button>
     </form>

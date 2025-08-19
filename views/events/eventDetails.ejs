@@ -27,5 +27,10 @@
       <% } %>
     </ul>
     <a href="/">Kembali</a>
+    <% if (getUserStatus()) { %>
+    <form action="/events/<%= events._id %>/join" method="post">
+      <button type="submit">Join</button>
+    </form>
+    <% } %>
   </body>
 </html>

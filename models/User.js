@@ -17,8 +17,17 @@ const userSchema = mongoose.Schema({
   joinedEvents: [
     {
       type: String,
+      ref: "Event",
     },
   ],
+});
+
+userSchema.pre("findOneAndUpdate", async function () {
+  if (this.getUpdate.$set && this.getUpdate().$set.password) {
+    await bcrypt.hash(this.getUpdate().$set.password, 12).then((hash) => {
+      this.getUpdate().$set.password = hash;
+    });
+  }
 });
 
 userSchema.pre("save", async function () {
