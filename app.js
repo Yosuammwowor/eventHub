@@ -58,7 +58,15 @@ app.get("/events/:id", async (req, res) => {
   if (!getUserStatus) {
     res.render("events/eventDetails", { events, getUserStatus });
   } else {
-    res.render("events/eventDetails", { events, getUserStatus });
+    const userStatus =
+      events.participants.some((id) => id.equals(req.session.userId)) ||
+      events.createdBy.equals(req.session.userId);
+
+    res.render("events/eventDetails", {
+      events,
+      getUserStatus,
+      userStatus,
+    });
   }
 });
 
