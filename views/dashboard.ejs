@@ -9,6 +9,7 @@
     <h1>Welcome back - <%= users.username %></h1>
     <a href="/">Kembali ke halaman utama</a>
 
+    <!-- Joined Events -->
     <h1>Joined Events</h1>
     <% if (users.joinedEvents.length != 0) { %>
     <ul>
@@ -20,14 +21,20 @@
     <h2>Not yet joined any events!</h2>
     <% } %>
 
+    <!-- Created Events -->
     <h1>Created Events</h1>
     <% if (events) { %>
     <ul>
-      <li><%= events.title %> - <%= events.description %></li>
+      <% for( let event of events ) { %>
+      <li><%= event.title %> - <%= event.description %></li>
+      <% } %>
     </ul>
     <% } else { %>
     <h2>Not yet created any events!</h2>
     <% } %>
+
+    <!-- Create an event -->
+    <a href="/events/new">Buat Event</a>
 
     <form action="/dashboard" method="post">
       <button type="submit">Logout</button>

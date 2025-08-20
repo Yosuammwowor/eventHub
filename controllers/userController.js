@@ -3,7 +3,7 @@ const User = require("../models/User");
 
 const getDashboard = async (req, res) => {
   const users = await User.findById(req.params.id).populate("joinedEvents");
-  let eventData;
+  let eventData = [];
 
   const Event = require("../models/Event");
   await Event.find()
@@ -11,7 +11,7 @@ const getDashboard = async (req, res) => {
     .then((res) => {
       for (let event of res) {
         if (event.createdBy._id == req.params.id) {
-          eventData = event;
+          eventData.push(event);
         }
       }
     })

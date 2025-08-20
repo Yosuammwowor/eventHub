@@ -1,5 +1,17 @@
 const Event = require("../models/Event");
 
+const getCreateEvent = (req, res) => {
+  res.render("events/createEvent");
+};
+
+const createEvent = async (req, res) => {
+  req.body.createdBy = req.session.userId;
+
+  await Event.insertOne(req.body);
+
+  res.redirect(`/dashboard/${req.session.userId}`);
+};
+
 const joinEvent = async (req, res) => {
   const User = require("../models/User");
 
@@ -13,4 +25,4 @@ const joinEvent = async (req, res) => {
   res.redirect(`/dashboard/${userId}`);
 };
 
-module.exports = { joinEvent };
+module.exports = { getCreateEvent, createEvent, joinEvent };
