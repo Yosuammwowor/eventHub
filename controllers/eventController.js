@@ -31,4 +31,23 @@ const deleteEvent = async (req, res) => {
   res.redirect(`/dashboard/${req.session.userId}`);
 };
 
-module.exports = { getCreateEvent, createEvent, joinEvent, deleteEvent };
+const getEditEvent = async (req, res) => {
+  const events = await Event.findById(req.params.id);
+
+  res.render("events/editEvent", { events });
+};
+
+const editEvent = async (req, res) => {
+  await Event.findByIdAndUpdate(req.params.id, req.body);
+
+  res.redirect(`/dashboard/${req.session.userId}`);
+};
+
+module.exports = {
+  getCreateEvent,
+  createEvent,
+  joinEvent,
+  deleteEvent,
+  getEditEvent,
+  editEvent,
+};

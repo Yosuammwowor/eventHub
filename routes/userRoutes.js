@@ -6,6 +6,5 @@ const { auth } = require("../middleware/authMiddleware");
 
 route.get("/dashboard/:id", auth, getDashboard);
 
-route.post("/dashboard", logOut);
-
+route.post("/dashboard", auth, logOut);
 module.exports = route;

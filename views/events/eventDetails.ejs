@@ -8,10 +8,15 @@
   <body>
     <h1>Event information:</h1>
     <ul>
-      <li>Event: <%= events.title %></li>
+      <li>Title: <%= events.title %></li>
       <li>Deskripsi: <%= events.description %></li>
       <li>Lokasi: <%= events.location %></li>
-      <li>Tanggal: <%= events.date.toDateString() %></li>
+
+      <% const date = String(events.date.getDate()).padStart(2, '0'); const
+      month = String(events.date.getMonth() + 1).padStart(2, '0'); const year =
+      events.date.getFullYear(); %>
+      <li>Tanggal: <%= `${date}/${month}/${year}` %></li>
+
       <li>Penyelenggara: <%= events.createdBy.username %></li>
       <% if (events.participants.length !== 0) { %>
       <li>

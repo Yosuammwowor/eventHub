@@ -13,8 +13,11 @@
     <h1>Joined Events</h1>
     <% if (users.joinedEvents.length != 0) { %>
     <ul>
-      <% for (let event of users.joinedEvents) { %>
-      <li><%= event.title %> - <%= event.date.toLocaleDateString() %></li>
+      <% for (let event of users.joinedEvents) { %> <% const date =
+      String(event.date.getDate()).padStart(2, '0'); const month =
+      String(event.date.getMonth() + 1).padStart(2, '0'); const year =
+      event.date.getFullYear(); %>
+      <li><%= event.title %> - <%= `${date}/${month}/${year}` %></li>
       <% } %>
     </ul>
     <% } else { %>
@@ -27,6 +30,9 @@
     <ul>
       <% for( let event of events ) { %>
       <li><%= event.title %> - <%= event.description %></li>
+
+      <!-- Edit link -->
+      <a href="/dashboard/events/<%= event._id %>">Edit Event</a>
 
       <!-- Delete Button -->
       <form action="/events/<%= event._id %>?_method=DELETE" method="post">

@@ -13,9 +13,12 @@
     <% if (events) { %>
     <ul>
       <% for (let event of events) { %>
+      <% const date = String(event.date.getDate()).padStart(2, '0'); const month
+      = String(event.date.getMonth() + 1).padStart(2, '0'); const year =
+      event.date.getFullYear(); %>
       <li>
         <a href="/events/<%= event._id %>">
-          <%= event.title %> - <%= event.date.toLocaleDateString()%></li>
+          <%= event.title %> - <%= `${date}/${month}/${year}` %></li>
         </a>
       <% } %>
     </ul>
