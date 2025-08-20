@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const connectDb = require("./config/db");
+const methodOverride = require("method-override");
 
 const app = express();
 const path = require("path");
@@ -19,6 +20,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(methodOverride("_method"));
 
 // Database connection
 connectDb();

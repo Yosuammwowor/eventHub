@@ -27,6 +27,12 @@
     <ul>
       <% for( let event of events ) { %>
       <li><%= event.title %> - <%= event.description %></li>
+
+      <!-- Delete Button -->
+      <form action="/events/<%= event._id %>?_method=DELETE" method="post">
+        <button type="submit">Delete</button>
+      </form>
+
       <% } %>
     </ul>
     <% } else { %>
